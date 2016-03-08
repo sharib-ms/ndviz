@@ -37,6 +37,7 @@ Since NeuroDataViz is separate from ndstore, the dataset / dataspace parameters 
 * **Scaling Levels**: The number of downsampled images in the resolution hierarchy. Note that this does not include the two upsampled zoom levels that NeuroDataViz provides. Matches the *ScalingLevels* parameter in ndstore.
 
 .. image:: images/addvizlayer.png
+  :width: 900px
 
 *Layers*
 
