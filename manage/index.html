@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Management Interface &mdash; NeuroDataViz 0.4.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/flatly/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.4.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="NeuroDataViz 0.4.1.1 documentation" href="../index.html" />
+    <link rel="next" title="VizProjects" href="vizproject.html" />
+    <link rel="prev" title="Adding Data Dynamically" href="../viewer/adding_data.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          NeuroDataViz</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.4</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><p class="caption"><span class="caption-text">Viewing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../viewer/index.html">Viewer Screen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../viewer/annotations.html">Annotations and Metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../viewer/image.html">Image Controls and Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../viewer/timeseries.html">Timeseries Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../viewer/adding_data.html">Adding Data Dynamically</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Management</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">Management Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vizproject.html">VizProjects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dataview.html">DataViews</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Management Interface</a><ul>
+<li><a class="reference internal" href="#example-usage">Example Usage</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../_sources/manage/index.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">Management Interface</a><ul>
+<li><a class="reference internal" href="#example-usage">Example Usage</a></li>
+</ul>
+</li>
+</ul>
+
+<form action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        </div>
+      </div>
+    <div class="col-md-9 content">
+      
+  <div class="section" id="management-interface">
+<span id="manage"></span><h1>Management Interface<a class="headerlink" href="#management-interface" title="Permalink to this headline">¶</a></h1>
+<p>NeuroDataViz has two modes of operation:</p>
+<ol class="arabic simple">
+<li><strong>TokenView</strong>: Allows the user to visualize any project ingested into an ndstore database by providing the token (and optionally, the channel). Properties are read directly from ndstore, and minimal customization is available by changing webargs or using onscreen tools.</li>
+<li><strong>ProjectView</strong>: Allows the user to create a <em>VizProject</em> consisting of arbitrary combinations of tokens / channels from ndstore. Properties, including channel color, initial starting location, and blend mode can be set by the user.</li>
+</ol>
+<p>The Management Interface is primarily concerned with building <em>VizProjects</em>, which are collections of ndstore projects, and <em>DataViews</em>, which are collections of VizProjects. A user can open the Management Interface by first Logging In to NeuroDataViz using the Login button in the navbar. After logging in, a button marked <em>Manage</em> should appear in the NavBar. Clicking Manage will launch the Management Interface as an overlay on the user&#8217;s current window.</p>
+<img alt="../_images/managehome.png" src="../_images/managehome.png" />
+<p>Once the Management Interface loads, the user is presented with a list of VizProjects and a list of DataViews (see above).</p>
+<p>The following example illustrates what VizProjects / DataViews might be created in a typical scenario.</p>
+<div class="section" id="example-usage">
+<span id="manage-example"></span><h2>Example Usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h2>
+<p>Suppose we have the following ndstore projects:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="41%" />
+<col width="20%" />
+<col width="20%" />
+<col width="19%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Project(token)</th>
+<th class="head">Channel 1</th>
+<th class="head">Channel 2</th>
+<th class="head">Channel 3</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>EMData</td>
+<td>image</td>
+<td>annotation</td>
+<td>...</td>
+</tr>
+<tr class="row-odd"><td>ComputerVisionOutput</td>
+<td>parameter1</td>
+<td>parameter2</td>
+<td>parameter3</td>
+</tr>
+</tbody>
+</table>
+<p>Here, these projects illustrate a typical usage pattern: some EM data is ingested into ndstore, and &#8220;ground-truth&#8221; annotations are uploaded. A computer vision algorithm is then run against the EMData image channel, generating three different annotation channels, which are each the result of some choice of parameters in the algorithm.</p>
+<p>Now, we want to visualize the result. Many combinations are possible. But, one option might be the following:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="23%" />
+<col width="20%" />
+<col width="18%" />
+<col width="15%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">VizProject</th>
+<th class="head">Layer 1 (Token / Chan)</th>
+<th class="head">Layer 2</th>
+<th class="head">Layer 3</th>
+<th class="head">Layer 4</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>EMDataViz</td>
+<td>EMData / image</td>
+<td>EMData / annotation</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="row-odd"><td>EMDataAlg1</td>
+<td>EMData / image</td>
+<td>EMData / annotation</td>
+<td>CVOutput / param1</td>
+<td>...</td>
+</tr>
+<tr class="row-even"><td>EMDataAlg2</td>
+<td>EMData / image</td>
+<td>EMData / annotation</td>
+<td>CVOutput / param2</td>
+<td>...</td>
+</tr>
+<tr class="row-odd"><td>EMDataAlg3</td>
+<td>EMData / image</td>
+<td>EMData / annotation</td>
+<td>CVOutput / param3</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+<p>This allows us to visualize the output of the Computer Vision algorithm (which is in a separate ndstore project) overlaid onto the original EM Data, with the original EM Annotations for comparison. Other combinations are possible. For example, we could create a VizProject with the original EM Data, the original Annotations, and all three of the Computer Vision annotation output channels. However, each VizProject layer adds increased latency to the application. Splitting a complex dataset across a few different VizProjects is always preferred, if possible.</p>
+<p>Note that the tokens and channels for the ComputerVisionOutput ndstore project have been abbreviated in the table above. When creating a new VizProject, use the full token and channel string.</p>
+<p>To provide a single place where a user can go to view our outputs, we create a <em>DataView</em>. Here, our DataView would consist of the following VizProjects:</p>
+<ul class="simple">
+<li>EMDataViz</li>
+<li>EMDataAlg1</li>
+<li>EMDataAlg2</li>
+<li>EMDataAlg3</li>
+</ul>
+<p>Further documentation is available for creating <a class="reference internal" href="vizproject.html#vizprojects"><span>VizProjects</span></a> and <a class="reference internal" href="dataview.html#dataviews"><span>DataViews</span></a>.</p>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2016, Alex Baden.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

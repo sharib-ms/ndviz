@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Viewer Screen &mdash; NeuroDataViz 0.4.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/flatly/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.4.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="NeuroDataViz 0.4.1.1 documentation" href="../index.html" />
+    <link rel="next" title="Annotations and Metadata" href="annotations.html" />
+    <link rel="prev" title="Overview" href="../overview.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          NeuroDataViz</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.4</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><p class="caption"><span class="caption-text">Viewing</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Viewer Screen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="annotations.html">Annotations and Metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image.html">Image Controls and Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries.html">Timeseries Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="adding_data.html">Adding Data Dynamically</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Management</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../manage/index.html">Management Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manage/vizproject.html">VizProjects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manage/dataview.html">DataViews</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Viewer Screen</a><ul>
+<li><a class="reference internal" href="#interface-overview">Interface Overview</a><ul>
+<li><a class="reference internal" href="#zoom-and-z-index-controls">Zoom and Z-Index Controls</a></li>
+<li><a class="reference internal" href="#navigation-controls">Navigation Controls</a></li>
+<li><a class="reference internal" href="#markers">Markers</a></li>
+<li><a class="reference internal" href="#control-information-panels">Control / Information Panels</a></li>
+<li><a class="reference internal" href="#keyboard-shortcuts">Keyboard Shortcuts</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sharing-data">Sharing Data</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../_sources/viewer/index.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">Viewer Screen</a><ul>
+<li><a class="reference internal" href="#interface-overview">Interface Overview</a><ul>
+<li><a class="reference internal" href="#zoom-and-z-index-controls">Zoom and Z-Index Controls</a></li>
+<li><a class="reference internal" href="#navigation-controls">Navigation Controls</a></li>
+<li><a class="reference internal" href="#markers">Markers</a></li>
+<li><a class="reference internal" href="#control-information-panels">Control / Information Panels</a></li>
+<li><a class="reference internal" href="#keyboard-shortcuts">Keyboard Shortcuts</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sharing-data">Sharing Data</a></li>
+</ul>
+</li>
+</ul>
+
+<form action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        </div>
+      </div>
+    <div class="col-md-9 content">
+      
+  <div class="section" id="viewer-screen">
+<span id="viewer"></span><h1>Viewer Screen<a class="headerlink" href="#viewer-screen" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="interface-overview">
+<h2>Interface Overview<a class="headerlink" href="#interface-overview" title="Permalink to this headline">¶</a></h2>
+<img alt="../_images/viewer_overview.png" src="../_images/viewer_overview.png" />
+<p>The NeuroDataViz viewing screen displaying data from <a class="reference external" href="http://openconnecto.me/synapseweb">Kristen Harris / SynapseWeb</a>. Important areas of the screen are numbered, and NeuroDataViz features corresponding to numbers are described below.</p>
+<ol class="arabic simple">
+<li><a class="reference internal" href="#zoom-and-zindex-controls"><span>Zoom and Z-Index Controls</span></a></li>
+<li><a class="reference internal" href="#nav-controls"><span>Navigation Controls</span></a></li>
+<li>Query Tool (see <a class="reference internal" href="annotations.html#annotations"><span>Annotations and Metadata</span></a>)</li>
+<li><a class="reference internal" href="#markers"><span>Markers</span></a></li>
+<li><a class="reference internal" href="../manage/dataview.html#dataviews"><span>DataViews</span></a></li>
+<li><a class="reference internal" href="../manage/index.html#manage"><span>Management Interface</span></a></li>
+<li><a class="reference internal" href="#control-panels"><span>Control / Information Panels</span></a></li>
+<li>Image Viewing Area</li>
+<li>Timeseries Controls (only appearing for <a class="reference internal" href="timeseries.html#timeseries"><span>Timeseries Data</span></a>)</li>
+<li><a class="reference internal" href="#keyboard-shortcuts"><span>Keyboard Shortcuts</span></a></li>
+</ol>
+<div class="section" id="zoom-and-z-index-controls">
+<span id="zoom-and-zindex-controls"></span><h3>Zoom and Z-Index Controls<a class="headerlink" href="#zoom-and-z-index-controls" title="Permalink to this headline">¶</a></h3>
+<p>The <cite>+</cite> / <cite>-</cite> buttons allow you to zoom through the resolution hierarchy (see <cite>:ref:`resolution_hierarchy). The up and down arrows allow you to travel through the dataset in z-space. If a dataset is properly bounded, a user should not be able to exceed the dataset bounds. Instead, a red outline will appear around the `z</cite> box in the navigation controls (2, <a class="reference internal" href="#nav-controls"><span>Navigation Controls</span></a>).</p>
+</div>
+<div class="section" id="navigation-controls">
+<span id="nav-controls"></span><h3>Navigation Controls<a class="headerlink" href="#navigation-controls" title="Permalink to this headline">¶</a></h3>
+<p>Navigation controls allow you to enter a specific <cite>(x,y,z)</cite> coordinate to pan/jump to. If any of the coordinates entered are outside the image bounds for the current resolution, the box corresponding to that coordinate will be outlined in red after pressing Go.</p>
+<p>Coordinates are updated as you pan and move in z-space. The coordinates in the box correspond to the center of the map. Furthermore, the coordinates also correspond to the image dimensions <strong>at the current image resolution</strong>. For example, an image with native resolution of <cite>1024 x 1024</cite> at z-index <cite>1</cite> will show <cite>(512, 512, 1)</cite> in the navigation controls panel when viewing resolution 0 (centered), but will show <cite>(256, 256, 1)</cite> in the navigation controls panel when viewing resolution 1.</p>
+<p>A thorough explanation of the resolution hierarchy treatment in NeuroDataViz is available here: <a class="reference internal" href="image.html#resolution-hierarchy"><span>Resolution Hierarchy</span></a></p>
+</div>
+<div class="section" id="markers">
+<span id="id1"></span><h3>Markers<a class="headerlink" href="#markers" title="Permalink to this headline">¶</a></h3>
+<p>The markers dropdown enables placing markers on the image in NeuroDataViz. Markers provide a means for data sharing. When a user clicks on a marker, a URL to that marker is automatically generated (for more see <a class="reference internal" href="#sharing-data"><span>Sharing Data</span></a>, below).</p>
+<p>Hovering over a marker also shows the <cite>(x,y,z)</cite> coordinates for that marker in a popup box.</p>
+<p>Note that the <cite>z</cite> coordinate of a marker <strong>will not change as you navigate in z-space</strong>. To place a marker at the same location at a different z-space, you will need to first clear all markers (using the <cite>Clear Markers</cite> selection in the dropdown), and then add a new marker.</p>
+</div>
+<div class="section" id="control-information-panels">
+<span id="control-panels"></span><h3>Control / Information Panels<a class="headerlink" href="#control-information-panels" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/projinfo_button.png" src="../_images/projinfo_button.png" />
+<p>TODO proj info stuff here</p>
+<img alt="../_images/imagecontrols_button.png" src="../_images/imagecontrols_button.png" />
+<p>TODO image controls</p>
+<img alt="../_images/adddata_button.png" src="../_images/adddata_button.png" />
+<p>TODO add data</p>
+</div>
+<div class="section" id="keyboard-shortcuts">
+<span id="id2"></span><h3>Keyboard Shortcuts<a class="headerlink" href="#keyboard-shortcuts" title="Permalink to this headline">¶</a></h3>
+<p>Keyboard shortcuts are available to make rapidly advancing through a dataset easier. The following shortcuts are enabled:</p>
+<blockquote>
+<div><ul class="simple">
+<li><cite>h</cite>: hide or show help</li>
+<li><cite>w</cite>: increase z-index</li>
+<li><cite>a</cite>: zoom out</li>
+<li><cite>s</cite>: decrease z-index</li>
+<li><cite>d</cite>: zoom in</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="sharing-data">
+<span id="id3"></span><h2>Sharing Data<a class="headerlink" href="#sharing-data" title="Permalink to this headline">¶</a></h2>
+<p>TODO using markers to share data</p>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2016, Alex Baden.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

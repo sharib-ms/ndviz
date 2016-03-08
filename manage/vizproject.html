@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>VizProjects &mdash; NeuroDataViz 0.4.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/flatly/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.4.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="NeuroDataViz 0.4.1.1 documentation" href="../index.html" />
+    <link rel="next" title="DataViews" href="dataview.html" />
+    <link rel="prev" title="Management Interface" href="index.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          NeuroDataViz</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.4</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><p class="caption"><span class="caption-text">Viewing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../viewer/index.html">Viewer Screen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../viewer/annotations.html">Annotations and Metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../viewer/image.html">Image Controls and Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../viewer/timeseries.html">Timeseries Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../viewer/adding_data.html">Adding Data Dynamically</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Management</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Management Interface</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">VizProjects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dataview.html">DataViews</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">VizProjects</a><ul>
+<li><a class="reference internal" href="#creating-a-vizproject">Creating a VizProject</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../_sources/manage/vizproject.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">VizProjects</a><ul>
+<li><a class="reference internal" href="#creating-a-vizproject">Creating a VizProject</a></li>
+</ul>
+</li>
+</ul>
+
+<form action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        </div>
+      </div>
+    <div class="col-md-9 content">
+      
+  <div class="section" id="vizprojects">
+<span id="id1"></span><h1>VizProjects<a class="headerlink" href="#vizprojects" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="creating-a-vizproject">
+<h2>Creating a VizProject<a class="headerlink" href="#creating-a-vizproject" title="Permalink to this headline">¶</a></h2>
+<p>From the Management Interface, click the <strong>Create Project</strong> link in the menu bar. A description of each field is listed in the table below.</p>
+<img alt="../_images/addvizproject.png" src="../_images/addvizproject.png" />
+<p><em>Basic Information</em></p>
+<ul class="simple">
+<li><strong>Project Name</strong>: A unique name for the VizProject, which also doubles as its URL token (e.g. <a class="reference external" href="http://viz.neurodata.io/project/myvizproject/">http://viz.neurodata.io/project/myvizproject/</a> would be the URL for the VizProject called <em>myvizproject</em>). As such, the Project Name can not contain spaces or special characters (other than an underscore).</li>
+<li><strong>Project Description</strong>: A brief Project Description.</li>
+<li><strong>Public</strong>: Currently has no effect. It is possible that private projects would be hidden from unauthenticated users in a future release.</li>
+</ul>
+<img alt="../_images/vizprojectdataspace.png" src="../_images/vizprojectdataspace.png" />
+<p><em>Dataspace</em></p>
+<p><strong>Autopopulate</strong>
+Since NeuroDataViz is separate from ndstore, the dataset / dataspace parameters must be input into NeuroDataViz. Since this is a tedious and error prone process, the Management Interface provides an autopopulate function that fetches dataset parameters from ndstore. Simply provide a server URL and a token for one of the ndstore projects in the dataset you want to input, click <em>Go</em>, and the Dataspace fields will be populated automatically.</p>
+<ul class="simple">
+<li><strong>x-offset</strong>: The x-offset for the ndstore dataset corresponding to your token.</li>
+<li><strong>x-imagesize</strong>: The x-imagesize for the ndstore dataset corresponding to your token.</li>
+<li><strong>y-offset</strong>: The y-offset for the ndstore dataset corresponding to your token.</li>
+<li><strong>y-imagesize</strong>: The y-imagesize for the ndstore dataset corresponding to your token.</li>
+<li><strong>z-offset</strong>: The z-offset for the ndstore dataset corresponding to your token.</li>
+<li><strong>z-imagesize</strong>: The z-imagesize for the ndstore dataset corresponding to your token.</li>
+<li><strong>Start Time</strong>: For timeseries projects only. If time does not start at t=0, select a time offset.</li>
+<li><strong>End Time</strong>: For timeseries projects only. The highest timestep in the dataset.</li>
+<li><strong>Minimum Resolution</strong>: This should almost always be 0. Refer to ndstore for the correct value.</li>
+<li><strong>Scaling Levels</strong>: The number of downsampled images in the resolution hierarchy. Note that this does not include the two upsampled zoom levels that NeuroDataViz provides. Matches the <em>ScalingLevels</em> parameter in ndstore.</li>
+</ul>
+<img alt="../_images/addvizlayer.png" src="../_images/addvizlayer.png" />
+<p><em>Layers</em></p>
+<p>Each layer corresponds to a token / channel combination from ndstore.</p>
+<p>Layers can be added using the <em>Add New Layer</em> button at the bottom of the screen. New layers are only added once <em>Save</em> is clicked, and a VizProject can be created without adding new layers (should you want to save your progress as you go).</p>
+<ul class="simple">
+<li><strong>Layer Name</strong>: A friendly name for the layer. This name can include spaces and some special characters.</li>
+<li><strong>Layer Description</strong>: A short description for the layer.</li>
+<li><strong>Layer Type</strong>: The NDV layer type corresponds to the type from ndstore.</li>
+<li><strong>Token</strong>: The ndstore token (accessor) for the layer.</li>
+<li><strong>Channel</strong>: The ndstore channel for the token. Even if the token only has one channel, this field is required.</li>
+<li><strong>Color</strong>: Optional, and only for image layers, this field false colors the layer. Useful for IF data.</li>
+<li><strong>Propagated?</strong>: If the layer has been downsampled (propagated) and the resolution hierarchy stored in ndstore, this should be checked.</li>
+<li><strong>Tilecached?</strong>: If this option is checked, the tilecache will be used instead of the standard ndstore tiles interface. Not all ndstore installations are tilecache compatibile. If you are unsure, leave this unchecked.</li>
+<li><strong>Tilecache Server</strong>: For advanced users. This field allows the user to set a separate tilecache server for loading images. One example use case is a multi-region ndstore deployment, where the main database system lives in one region, but tilecache servers are deployed on a local (or closer) network.</li>
+</ul>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2016, Alex Baden.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
