@@ -24,6 +24,7 @@ import django.contrib.auth
 base_urlpatterns = patterns('ndv.views',
     # tools
     url(r'^tools/', include('tools.urls')),
+    url(r'^renderhack/(?P<webargs>[\w:,./-]+)', 'renderHack'),
     # data views
     url(r'^dataview/render/(?P<webargs>[\w:,/-]+)', 'renderDataview', name='renderDataview'),
     url(r'^dataview/(?P<webargs>[\w:,/-]+)', 'dataview', name='dataview'),

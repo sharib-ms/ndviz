@@ -77,6 +77,29 @@ ANNO_TYPES = {
     9 : 'ROI',
 }
 
+def renderHack(request, webargs):
+  try:
+    p = re.compile("(\w+)/([\w+,]*?)/(xy|yz|xz|)/(\d+/)?(\d+)/(\d+)_(\d+)_(\d+).png")
+    m = p.match(webargs)
+    [token, channel, slice_type, filterlist] = [i for i in m.groups()[:4]]
+    [ztile, ytile, xtile, res] = [int(i.strip('/')) if i is not None else None for i in  m.groups()[4:]]
+
+    #import pdb; pdb.set_trace()
+
+    addr = "http://localhost:8080/render-ws/v1/owner/demo/project/test_1/stack/secondpass_acquire/z/{}/box/{},{},{},{},{}/png-image".format(ztile, xtile*(512*2**(res)), ytile*(512*2**(res)), 512*2**(res), 512*2**(res), float(1)/float(2**res) )
+    print addr
+
+    try:
+      r = urllib2.urlopen(addr)
+    except urllib2.HTTPError, e:
+      r = '[ERROR]: ' + str(e.getcode())
+
+    return HttpResponse(r, content_type="image/png")
+
+  except Exception, e:
+    return HttpResponseBadRequest(e)
+
+
 def default(request):
   context = {
       'layers': None,

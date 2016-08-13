@@ -149,11 +149,11 @@
     ndv.ymax = {{ ysize }} + {{ yoffset }} - 1;
 
     ndv.zmin = {{ zoffset }};
-    ndv.zmax = {{ zsize }} + {{ zoffset }} - 1;
+    ndv.zmax = 20;
 
-    ndv.minres = {{ minres }};
-    ndv.maxres = {{ maxres }};
-    ndv.res = {{ res }};
+    ndv.minres = 0;
+    ndv.maxres = 5;
+    ndv.res = 0;
     // set zindex to some default (we pick the lowest slice)
     ndv.zindex = {{ zstart }};
 
@@ -246,84 +246,9 @@
       }
     };
 
-    // load image layers first
-    {% for layer in layers %}
-      {% if layer.layertype != 'annotation' %}
-      {# setup the URL #}
-
-        {% if layer.channel %}
-          var webtoken = '{{ layer.token }}/{{ layer.channel }}';
-        {% else %}
-          var webtoken = '{{ layer.token }}';
-        {% endif %}
-
-        {% if layer.tilecache %}
-          {% if layer.layertype == 'timeseries' %}
-            {% if layer.tilecache_server %}
-              var url = 'http://{{ layer.tilecache_server }}/ocptilecache/' + webtoken + '/xy/{{ starttime }}/{zindex}/{y}_{x}_{z}.png';
-            {% else %}
-              var url = 'http://{{ layer.server }}/ocptilecache/tilecache/' + webtoken + '/xy/{{ starttime }}/{zindex}/{y}_{x}_{z}.png';
-            {% endif %}
-          {% else %}
-            {% if layer.tilecache_server %}
-            {# note: presently unclear what the tilecache URL endpoint should be #}
-              var url = 'http://{{ layer.tilecache_server }}/ocptilecache/' + webtoken + '/xy/{zindex}/{y}_{x}_{z}.png';
-            {% else %}
-              var url = 'http://{{ layer.server }}/ocptilecache/tilecache/' + webtoken + '/xy/{zindex}/{y}_{x}_{z}.png';
-            {% endif %}
-          {% endif %}
-
-        {% else %}
-          {% if layer.layertype == 'timeseries' %}
-            var url = 'http://{{ layer.server }}/ocp/catmaid/' + webtoken + '/xy/{{ starttime }}/{zindex}/{y}_{x}_{z}.png';
-          {% else %}
-            var url = 'http://{{ layer.server }}/ocp/catmaid/' + webtoken + '/xy/{zindex}/{y}_{x}_{z}.png';
-          {% endif %}
-        {% endif %}
-
-        {# add the layer #}
-        var newLayer = new NDVLayer("{{ layer.layer_name|cut:" " }}", "{{ layer.layertype }}",  "{{ layer.propagate }}", url, "{{ layer.server }}", "{{ layer.token }}", "{{ layer.channel }}", "{{ layer.color }}", {{ layer.tilecache|lower }});
-        layers[newLayer.name] = newLayer;
-
-        {% endif %}
-    {% endfor %}
-
-    // now load annotations
-    {% for layer in layers %}
-      {% if layer.layertype == 'annotation' %}
-      {# setup the URL #}
-
-        {% if layer.channel %}
-          var webtoken = '{{ layer.token }}/{{ layer.channel }}';
-          {% if layer.color %}
-            webtoken = webtoken + ':{{layer.color}}';
-          {% endif %}
-        {% else %}
-          var webtoken = '{{ layer.token }}';
-        {% endif %}
-
-        {% if layer.tilecache %}
-          {% if layer.layertype == 'timeseries' %}
-            var url = 'http://{{ layer.server }}/ocptilecache/tilecache/' + webtoken + '/xy/{{ starttime }}/{zindex}/{y}_{x}_{z}.png';
-          {% else %}
-            var url = 'http://{{ layer.server }}/ocptilecache/tilecache/' + webtoken + '/xy/{zindex}/{y}_{x}_{z}.png';
-          {% endif %}
-
-        {% else %}
-          {% if layer.color %}
-            var url = 'http://{{ layer.server }}/ocp/catmaid/mcfc/' + webtoken + '/xy/{zindex}/{y}_{x}_{z}.png';
-          {% elif layer.layertype == 'timeseries' %}
-            var url = 'http://{{ layer.server }}/ocp/catmaid/' + webtoken + '/xy/{{ starttime }}/{zindex}/{y}_{x}_{z}.png';
-          {% else %}
-            var url = 'http://{{ layer.server }}/ocp/catmaid/' + webtoken + '/xy/{zindex}/{y}_{x}_{z}.png';
-          {% endif %}
-        {% endif %}
-
-        {# add the layer #}
-        var newLayer = new NDVLayer("{{ layer.layer_name|cut:" " }}", "{{ layer.layertype }}", "{{ layer.propagate }}", url, "{{ layer.server }}", "{{ layer.token }}", "{{ layer.channel }}", "{{ layer.color }}", {{ layer.tilecache|lower }});
-        layers[newLayer.name] = newLayer;
-        {% endif %}
-    {% endfor %}
+    var url = 'http://localhost:8000/renderhack/test/test/xy/{zindex}/{y}_{x}_{z}.png';
+    var newLayer = new NDVLayer("test", "image", "2", url, "test", "test", "test", "", "");
+    layers[newLayer.name] = newLayer;
 
 
     function setThreeColor(color) {
