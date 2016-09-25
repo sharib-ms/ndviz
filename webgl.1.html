@@ -10,6 +10,22 @@
   <body>
     <script type="text/babel">
 
+    function fromScreenPosition(vector, camera) {
+      console.log('raw vector');
+      console.log(vector);
+      // convert vector from screen coordinates to normalized device coordinates
+      var widthHalf = 0.5*window.innerWidth;
+      var heightHalf = 0.5*window.innerHeight;
+
+      vector.x = (vector.x / window.innerWidth/2);
+      vector.y = (- ( vector.y ) / window.innerHeight / 2);
+
+      console.log(vector);
+
+      //console.log(vector.project(camera));
+      console.log('');
+    }
+
     class Visualizer extends React.Component {
       constructor(props) {
         super(props);
@@ -22,8 +38,10 @@
         this.triggerRender = this.triggerRender.bind(this);
         this.onWindowResize = this.onWindowResize.bind(this);
         this.onDocumentMouseMove = this.onDocumentMouseMove.bind(this);
-        this.startMouseMove = this.startMouseMove.bind(this);
-        this.endMouseMove = this.endMouseMove.bind(this);
+        this.onDocumentMouseDown = this.onDocumentMouseDown.bind(this);
+        this.onDocumentMouseUp = this.onDocumentMouseUp.bind(this);
+
+        this.loadTile = this.loadTile.bind(this);
         //this.updateCameraState = this.updateCameraState.bind(this);
 
         this.cameraDistance = this.props.cameraDistance || 1000;
@@ -40,17 +58,19 @@
 
         // pan listeners
         //addEventListener( 'mousemove', self.onDocumentMouseMove, false );
-        addEventListener('mousedown', self.startMouseMove, false);
-        addEventListener('mouseup', self.endMouseMove, false);
+        addEventListener('mousedown', self.onDocumentMouseDown, false);
+        addEventListener('mouseup', self.onDocumentMouseUp, false);
       }
 
       init() {
         let self = this;
 
-        self.mouse = new THREE.Vector2();
-        self.mouseStart = new THREE.Vector2();
+        //self.mouse = new THREE.Vector2();
+        self.lastMouse = new THREE.Vector2();
 
         self.offset = new THREE.Vector3();
+
+        self.tiles = {};
 
         // Set up scene primitives
         self.scene = new THREE.Scene();
@@ -60,8 +80,8 @@
         self.renderer.setSize(window.innerWidth, window.innerHeight);
 
         // Insert into document
-        var container = document.getElementById('visualizer-target');
-        container.appendChild(self.renderer.domElement);
+        self.container = document.getElementById('visualizer-target');
+        self.container.appendChild(self.renderer.domElement);
 
         self.camera = new THREE.OrthographicCamera(
           window.innerWidth / -2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / -2,
@@ -69,6 +89,7 @@
         self.camera.position.z = 400;
 
         // AB polluting render
+        /*
         var geometry = new THREE.PlaneGeometry(512, 512);
         var loader = new THREE.TextureLoader();
         loader.load(
@@ -90,10 +111,48 @@
             console.log('error');
           }
         )
-        //var texture = new THREE.TextureLoader().load('http://synaptomes.neurodata.io/nd/catmaid/collman15v2/EM2k/xy/1/0_0_3.png');
-        //var material = new THREE.MeshBasicMaterial({ map: texture });
-        //self.mesh = new THREE.Mesh( geometry, material );
-        //self.scene.add( self.mesh );
+        */
+        ///xy/{{ starttime }}/{zindex}/{y}_{x}_{z}.png
+        this.loadTile('http://synaptomes.neurodata.io/nd/catmaid/collman15v2/EM2k/xy/1/0_0_3.png', [0,0]);
+        this.loadTile('http://synaptomes.neurodata.io/nd/catmaid/collman15v2/EM2k/xy/1/0_1_3.png', [0,1]);
+        this.loadTile('http://synaptomes.neurodata.io/nd/catmaid/collman15v2/EM2k/xy/1/1_0_3.png', [1,0]);
+        this.loadTile('http://synaptomes.neurodata.io/nd/catmaid/collman15v2/EM2k/xy/1/1_1_3.png', [2,1]);
+      }
+
+      loadTile(url, yxpt) {
+        let self = this;
+
+        var geometry = new THREE.PlaneGeometry(512, 512);
+        var loader = new THREE.TextureLoader();
+        loader.load(
+          // resource URL
+          url,
+          // Function when resource is loaded
+          function( texture ) {
+            var material = new THREE.MeshBasicMaterial({map:texture});
+            var mesh = new THREE.Mesh( geometry, material );
+
+            // TODO -- 512 to tilesize, 256 to tilesize / 2
+            var pos = new THREE.Vector3(
+              (-(window.innerWidth) / 2) + yxpt[1]*512 + 256,
+              (window.innerHeight / 2) - yxpt[0]*512 - 256,
+              0
+            );
+
+            mesh.position.copy(pos);
+            self.scene.add( mesh );
+            self.tiles[yxpt] = mesh;
+            self.renderScene();
+          },
+          // Function to be called when download progresses
+          function( xhr ) {
+            // null
+          },
+          // Function called when download errors
+          function( xhr ) {
+            console.log('error');
+          }
+        );
       }
 
       onWindowResize() {
@@ -105,44 +164,25 @@
         self.renderer.setSize( window.innerWidth, window.innerHeight );
       }
 
-      startMouseMove(event) {
+      onDocumentMouseDown(event) {
         let self = this;
 
         event.preventDefault();
 
-        var mouse = new THREE.Vector3(
-          (event.clientX / window.innerWidth) * 2 - 1,
-          -(event.clientY / window.innerHeight) * 2 + 1,
-          0
-        );
-
-        // vector from mouse to position of mesh
-        self.offset.copy( mouse.unproject(self.camera) ).sub( self.mesh.position )
-
-
-        /*self.mouseStart.set(
-          (event.clientX / window.innerWidth) * 2 - 1,
-          -(event.clientY / window.innerHeight) * 2 + 1,
-        );
-        */
-        /*
-        self.mouseStart.set(
+        self.lastMouse.set(
           (event.clientX / window.innerWidth) * 2 - 1,
           -(event.clientY / window.innerHeight) * 2 + 1
         );
-        */
 
-        //self.offset.copy(mouseStart).sub(self.mesh.position);
-
-        //container.style.cursor = 'move';
+        self.container.style.cursor = 'move';
 
         addEventListener('mousemove', self.onDocumentMouseMove, false);
       }
 
-      endMouseMove(event) {
+      onDocumentMouseUp(event) {
         let self = this;
 
-        //container.style.cursor = 'auto';
+        self.container.style.cursor = 'auto';
 
         removeEventListener('mousemove', self.onDocumentMouseMove);
       }
@@ -152,55 +192,26 @@
 
         event.preventDefault();
 
-        var mouse = new THREE.Vector3(
+        var mouse = new THREE.Vector2(
           (event.clientX / window.innerWidth) * 2 - 1,
-          -(event.clientY / window.innerHeight) * 2 + 1,
-          0
+          -(event.clientY / window.innerHeight) * 2 + 1
         );
 
-        /*
-        var displacement = new THREE.Vector3(
-          mouse.x - self.mouseStart.x,
-          mouse.y - self.mouseStart.y,
-          0
-        );
-        */
+        // convoluted subtraction
+        var mouseDiff = new THREE.Vector3(
+          mouse.x - self.lastMouse.x,
+          mouse.y - self.lastMouse.y,
+        1);
+        mouseDiff.unproject(self.camera);
+        // unprojecting affects the z coordinate, but we don't care
+        mouseDiff.z = 0;
 
-        //console.log(displacement);// .sub(self.offset));
-        //console.log('test');
-        console.log('before');
-        console.log(self.mesh.position);
-        self.mesh.position.copy( mouse.unproject(self.camera).sub( self.offset ) );
-        console.log(self.mesh.position);
+        self.lastMouse = mouse;
 
-
-         //.sub(self.offset) );
-
-        //console.log(self.mesh.position);
-
-        /*
-        self.mouse.set(
-          event.clientX - window.innerWidth / 2,
-          event.clientY - window.innerHeight / 2
-        );
-        */
-        /*
-        var displacement = new THREE.Vector3(
-          (self.mouse.x - self.mesh.position.x)*0.36,
-          (self.mouse.y - self.mesh.position.y)*0.36,
-          0
-        );
-        */
-        /*
-        var displacement = new THREE.Vector3(
-          (self.mouse.x - self.mouseStart.x),
-          (-self.mouse.y - self.mouseStart.y),
-          0
-        );
-        */
-        //self.mesh.position.sub(curMouse);
-
-        //self.mesh.position.set(self.mesh.position.x + displacement.x, self.mesh.position.y + displacement.y, self.mesh.position.z);
+        for (var meshpt in self.tiles) {
+          var mesh = self.tiles[meshpt];
+          mesh.position.add( mouseDiff );
+        }
 
         self.renderScene();
       }
@@ -215,6 +226,7 @@
 
       renderScene() {
         let self = this;
+        console.log(self.tiles);
         self.renderer.render(self.scene, self.camera);
       }
 
