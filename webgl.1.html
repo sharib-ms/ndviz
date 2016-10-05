@@ -9,23 +9,6 @@
   </head>
   <body>
     <script type="text/babel">
-
-    function fromScreenPosition(vector, camera) {
-      console.log('raw vector');
-      console.log(vector);
-      // convert vector from screen coordinates to normalized device coordinates
-      var widthHalf = 0.5*window.innerWidth;
-      var heightHalf = 0.5*window.innerHeight;
-
-      vector.x = (vector.x / window.innerWidth/2);
-      vector.y = (- ( vector.y ) / window.innerHeight / 2);
-
-      console.log(vector);
-
-      //console.log(vector.project(camera));
-      console.log('');
-    }
-
     class Visualizer extends React.Component {
       constructor(props) {
         super(props);
@@ -41,7 +24,10 @@
         this.onDocumentMouseDown = this.onDocumentMouseDown.bind(this);
         this.onDocumentMouseUp = this.onDocumentMouseUp.bind(this);
 
+        this.onDocumentScroll = this.onDocumentScroll.bind(this);
+
         this.loadTile = this.loadTile.bind(this);
+        self.buildTileUrl = this.buildTileUrl.bind(this);
         //this.updateCameraState = this.updateCameraState.bind(this);
 
         this.cameraDistance = this.props.cameraDistance || 1000;
@@ -57,16 +43,19 @@
         false);
 
         // pan listeners
-        //addEventListener( 'mousemove', self.onDocumentMouseMove, false );
         addEventListener('mousedown', self.onDocumentMouseDown, false);
         addEventListener('mouseup', self.onDocumentMouseUp, false);
+        // zoom listeners
+        addEventListener('wheel', self.onDocumentScroll, false);
       }
 
       init() {
         let self = this;
 
-        //self.mouse = new THREE.Vector2();
         self.lastMouse = new THREE.Vector2();
+        self.currentRes = 3
+        self.zIndex = 1;
+        self.url = 'http://synaptomes.neurodata.io/nd/catmaid/collman15v2/EM2k/xy/{z}/{y}_{x}_{res}.png';
 
         self.offset = new THREE.Vector3();
 
@@ -88,45 +77,36 @@
           1, 1024.0);
         self.camera.position.z = 400;
 
-        // AB polluting render
-        /*
-        var geometry = new THREE.PlaneGeometry(512, 512);
-        var loader = new THREE.TextureLoader();
-        loader.load(
-          // resource URL
-          'http://synaptomes.neurodata.io/nd/catmaid/collman15v2/EM2k/xy/1/0_0_3.png',
-          // Function when resource is loaded
-          function( texture ) {
-            var material = new THREE.MeshBasicMaterial({map:texture});
-            self.mesh = new THREE.Mesh( geometry, material );
-            self.scene.add( self.mesh );
-            self.renderScene();
-          },
-          // Function to be called when download progresses
-          function( xhr ) {
-            // null
-          },
-          // Function called when download errors
-          function( xhr ) {
-            console.log('error');
-          }
-        )
-        */
         ///xy/{{ starttime }}/{zindex}/{y}_{x}_{z}.png
+        /*
         this.loadTile('http://synaptomes.neurodata.io/nd/catmaid/collman15v2/EM2k/xy/1/0_0_3.png', [0,0]);
         this.loadTile('http://synaptomes.neurodata.io/nd/catmaid/collman15v2/EM2k/xy/1/0_1_3.png', [0,1]);
         this.loadTile('http://synaptomes.neurodata.io/nd/catmaid/collman15v2/EM2k/xy/1/1_0_3.png', [1,0]);
         this.loadTile('http://synaptomes.neurodata.io/nd/catmaid/collman15v2/EM2k/xy/1/1_1_3.png', [2,1]);
+        */
+        this.loadTile(0, 0);
+        this.loadTile(0, 1);
+        this.loadTile(1, 0);
+        this.loadTile(1, 2);
       }
 
-      loadTile(url, yxpt) {
+      buildTileUrl(x, y, z, res, url) {
+        url = url.replace('{x}', x);
+        url = url.replace('{y}', y);
+        url = url.replace('{z}', z);
+        url = url.replace('{res}', res);
+        console.log(url);
+        return url;
+      }
+
+      loadTile(x, y) {
         let self = this;
 
         var geometry = new THREE.PlaneGeometry(512, 512);
         var loader = new THREE.TextureLoader();
         loader.load(
           // resource URL
-          url,
+          self.buildTileUrl(x, y, self.zIndex, self.currentRes, self.url),
           // Function when resource is loaded
           function( texture ) {
             var material = new THREE.MeshBasicMaterial({map:texture});
@@ -134,14 +114,14 @@
 
             // TODO -- 512 to tilesize, 256 to tilesize / 2
             var pos = new THREE.Vector3(
-              (-(window.innerWidth) / 2) + yxpt[1]*512 + 256,
-              (window.innerHeight / 2) - yxpt[0]*512 - 256,
+              (-(window.innerWidth) / 2) + x*512 + 256,
+              (window.innerHeight / 2) - y*512 - 256,
               0
             );
 
             mesh.position.copy(pos);
             self.scene.add( mesh );
-            self.tiles[yxpt] = mesh;
+            self.tiles[x + ',' + y] = mesh;
             self.renderScene();
           },
           // Function to be called when download progresses
@@ -214,6 +194,11 @@
         }
 
         self.renderScene();
+      }
+
+      onDocumentScroll(event) {
+        console.log(event.deltaY);
+        // convert to zoom factor
       }
 
       animate() {
