@@ -19,7 +19,8 @@ RUN git clone https://github.com/neurodata/ndviz.git
 WORKDIR ndviz
 
 # checkout desired version
-RUN git checkout tags/v0.6
+RUN git checkout boss
+RUN git pull
 
 # install ndviz requirements
 RUN pip install -r setup/requirements.txt
