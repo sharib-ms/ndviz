@@ -548,7 +548,7 @@ def bossView(request, webargs):
     tmp_layer.token = experiment
     tmp_layer.channel = channel
     tmp_layer.server = server
-    tmp_layer.propagate = True # assume theboss always propagated for now
+    tmp_layer.propagate = 2 # assume theboss always propagated for now
     tmp_layer.tilecache = False
     if channel in channel_colors:
       tmp_layer.color = channel_colors[channel]
