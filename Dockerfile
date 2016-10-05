@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 MAINTAINER Alex Baden / Neurodata (neurodata.io)
 
 RUN apt-get update
@@ -6,11 +6,17 @@ RUN apt-get -y upgrade
 
 # install ndviz dependencies
 RUN apt-get -y install \
-  mysql-server mysql-client libmysqlclient-dev \
   python-all-dev \
-  python-pip python-mysqldb \
+  python-pip \
   git vim \
   supervisor
+
+# install MySQL independently 
+RUN DEBIAN_FRONTEND=noninteractive \
+  apt-get -y install \
+  mysql-server mysql-client \ 
+  libmysqlclient-dev \
+  python-mysqldb  
 
 # clone ndviz
 RUN mkdir -p /var/www/
@@ -27,6 +33,7 @@ RUN pip install -r setup/requirements.txt
 
 # copy the local settings.py into the correct directory
 COPY settings_secret.py ndv/
+# make sure you delete the "FORCE_SCRIPT_NAME line in settings.py! 
 COPY settings.py ndv/
 
 # create mysql users
