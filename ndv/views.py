@@ -34,7 +34,8 @@ from models import VizLayer
 from models import DataView
 from models import DataViewItem
 
-import urllib2
+import urllib2, urllib
+import ssl
 import json
 import re
 
@@ -432,6 +433,176 @@ def projectview(request, webargs):
       'dataviews': dv,
   }
   return render(request, 'ndv/viewer.html', context)
+
+def bossView(request, webargs):
+  """ /<<server>>/<<collection>>/<<experiment>>/<<channels>>/<<res>/<<x>>/<<y>>/<<z>>/<<options>>/ """
+  # res (x,y,z) will center the map at (x,y,z) for a given res
+  channel_colors = {}
+
+  # initialize these variables, which will be passed to the template
+  x = None
+  y = None
+  z = None
+  res = None
+  marker = False
+
+  token = None
+
+  options = None
+
+  # process arguments
+  try:
+    p = re.compile(r"(?P<server>[\w%\-.:]+)/(?P<collection>[\w_]+)/(?P<experiment>[\w_]+)/(?P<channels>[\w,:_]+)/?(?P<token>[\w_]+)?/?(?P<plane>xy|xz|yz)?/?(?P<res>\d+)?/?(?P<x>\d+)?/?(?P<y>\d+)?/?(?P<z>\d+)?/?(options)?/?(?P<options>[\w:,{}]+)?/?")
+    m = p.match(webargs)
+    md = m.groupdict()
+    server = md['server']
+    collection = md['collection']
+    experiment = md['experiment']
+    channels = md['channels'].split(',')
+    for idx, channel in enumerate(channels):
+      if len(channel.split(':')) > 1:
+        newChannel = stack.split(':')[0]
+        channel_colors[newChannel] = channel.split(':')[1]
+        channels[idx] = newChannel
+
+    if md['token']:
+      token = md['token']
+
+    if md['res']:
+      res = int(md['res'])
+
+    if md['x'] and md['y'] and md['z']:
+      x = int(md['x'])
+      y = int(md['y'])
+      z = int(md['z'])
+
+    if md['options']:
+      options = {}
+      optionsList = md['options'].split(',')
+      for option in optionsList:
+        options[option.split(':')[0]] = option.split(':')[1]
+
+  except Exception, e:
+    print e
+    return HttpResponseBadRequest("[ERROR]: Invalid RESTful argument. ({})".format(e))
+
+
+  # get metadata data from the render server
+  server = urllib.unquote(server)
+  #addr = "http://{}/v0.6/resource/coordinateframes/{}/".format(server, owner, project, stacks[0])
+  # TODO: hard coding this for now
+  # get the resource info for our token and channel
+  addr = "https://{}/v0.6/resource/{}/{}/".format(server, collection, experiment)
+
+  urlRequest = urllib2.Request(addr, headers={"Authorization" : "Token {}".format(token)})
+
+  requestContext = ssl._create_unverified_context()
+
+  try:
+    r = urllib2.urlopen(urlRequest, context=requestContext)
+  except urllib2.HTTPError, e:
+    return HttpResponseBadRequest('[ERROR]: Unknown error. (error code: {})'.format( e.getcode() ))
+
+  resourceinfo = json.loads(r.read())
+
+  # get project metadata
+  project_name = resourceinfo['name']
+  project_description = resourceinfo['description']
+
+  # get resource info
+  scalinglevels = resourceinfo['num_hierarchy_levels']
+
+  # get coordinate frame
+  addr = "https://{}/v0.6/resource/coordinateframes/ac4_coord_frame/".format(server)
+
+  urlRequest = urllib2.Request(addr, headers={"Authorization" : "Token {}".format(token)})
+
+  requestContext = ssl._create_unverified_context()
+
+  try:
+    r = urllib2.urlopen(urlRequest, context=requestContext)
+  except urllib2.HTTPError, e:
+    return HttpResponseBadRequest('[ERROR]: Unknown error. (error code: {})'.format( e.getcode() ))
+
+  resourceCoordinateInfo = json.loads(r.read())
+
+  # get dataset metadata
+  ximagesize = resourceCoordinateInfo['x_stop']
+  yimagesize = resourceCoordinateInfo['y_stop']
+  zimagesize = resourceCoordinateInfo['z_stop']
+
+  xoffset = resourceCoordinateInfo['x_start']
+  yoffset = resourceCoordinateInfo['y_start']
+  zoffset = resourceCoordinateInfo['z_start']
+
+  starttime = 0
+  endtime = 0
+
+  layers = []
+  # convert the specified stack to a layer
+  for channel in channels:
+    tmp_layer = VizLayer()
+    tmp_layer.layer_name = channel
+    tmp_layer.layer_description = "new boss interface"
+    tmp_layer.layertype = 'image'
+    tmp_layer.token = experiment
+    tmp_layer.channel = channel
+    tmp_layer.server = server
+    tmp_layer.tilecache = False
+    if channel in channel_colors:
+      tmp_layer.color = channel_colors[channel]
+    #if channel['channel_name'] in channel_colors.keys():
+    #  tmp_layer.color = channel_colors[ channel['channel_name'] ].upper()
+    layers.append(tmp_layer)
+
+  # center the map on the image at base resolution, if no other coordinate is specified
+  if x is None:
+    x = int((ximagesize - xoffset) / 2)
+  if y is None:
+    y = int((yimagesize - yoffset) / 2)
+  if z is None:
+    z = zoffset
+  if res is None:
+    res = 0
+
+  # process template options
+
+  blendmode = BLENDOPTS['additive']
+  if options is not None:
+    if 'marker' in options.keys():
+      marker = True
+    if 'blend' in options.keys() and options['blend'] in BLENDOPTS.keys():
+      blendmode = BLENDOPTS[ options['blend'].lower() ]
+
+  context = {
+      'layers': layers,
+      'renderServer': server,
+      'collection': collection,
+      'experiment': experiment,
+      'token': token,
+      'project_name': project_name,
+      'xsize': ximagesize,
+      'ysize': yimagesize,
+      'zsize': zimagesize,
+      'xoffset': xoffset,
+      'yoffset': yoffset,
+      'zoffset': zoffset,
+      'starttime': 0,
+      'endtime': 0,
+      'maxres': scalinglevels,
+      'minres':0,
+      'res': res,
+      'xstart': x,
+      'ystart': y,
+      'zstart': z,
+      'plane': 'xy',
+      'marker': marker,
+      'timeseries': False,
+      'blendmode': blendmode,
+      'version': VERSION,
+      'viewtype': 'bossview',
+  }
+  return render(request, 'ndv/bossViewer.html', context)
 
 def manage(request):
   context = {
