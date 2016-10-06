@@ -309,7 +309,9 @@
     {% for layer in layers %}
         var webtoken = '{{ collection }}/{{ experiment }}/{{ layer.channel }}';
 
-        var url = 'https://{{ layer.server }}/v0.6/tile/{{ collection }}/{{ experiment }}/{{ layer.channel }}/{{ plane }}/512/{z}/{x}/{y}/{zindex}/';
+        //var url = "http://{{ request.META.HTTP_HOST }}/getRenderTile/{{ renderServer }}/{{ owner }}/{{ layer.token }}/{{ layer.channel }}/xy/{zindex}/{y}_{x}_{z}.png";
+
+        var url = 'http://{{ request.META.HTTP_HOST }}/getBossTile/{{ layer.server }}/v0.6/tile/{{ collection }}/{{ experiment }}/{{ layer.channel }}/{{ token }}/{{ plane }}/512/{z}/{x}/{y}/{zindex}/';
 
         {# add the layer #}
         var newLayer = new NDVLayer("{{ layer.layer_name|cut:" " }}", "{{ layer.layertype }}",  "{{ layer.propagate }}", url, "{{ layer.server }}", "{{ layer.token }}", "{{ layer.channel }}", "{{ layer.color }}", {{ layer.tilecache|lower }});

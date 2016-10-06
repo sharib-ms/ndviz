@@ -38,8 +38,9 @@ base_urlpatterns = [
     url(r'^query/(?P<queryargs>[\w,./-]+)', views.query),
     # for getting the ramon json information from ocp
     url(r'^ramoninfo/(?P<webargs>[\w,./-]+)', views.ramoninfo),
-    # supporting the boss 
+    # supporting the boss
     url(r'^boss/(?P<webargs>[\w:,./-]+)', views.bossView),
+    url(r'^getBossTile/(?P<webargs>[\w:,./-]+)', views.getBossTile),
     # content for the manage modal
     url(r'^manage/viewProjects/$', views.viewProjects, name='viewProjects'),
     # manage modal

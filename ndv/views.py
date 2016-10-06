@@ -605,6 +605,47 @@ def bossView(request, webargs):
   }
   return render(request, 'ndv/bossViewer.html', context)
 
+def getBossTile(request, webargs):
+  try:
+    p = re.compile(r"(?P<server>[\w%\-.:]+)/(?P<version>[\w.]+)/tile/(?P<collection>[\w_]+)/(?P<experiment>[\w_]+)/(?P<channel>[\w_]+)/?(?P<token>[\w_]+)?/(xy|yz|xz|)/512/(?P<res>\d+)/(?P<x>\d+)/(?P<y>\d+)/(?P<zindex>\d+)/")
+
+    m = p.match(webargs)
+    md = m.groupdict()
+  except Exception, e:
+    print e
+
+  server = md['server']
+  version = md['version']
+  collection = md['collection']
+  experiment = md['experiment']
+  channel = md['channel']
+
+  token = md['token']
+  print token
+
+  ztile = int(md['zindex'])
+  xtile = int(md['x'])
+  ytile = int(md['y'])
+  res = int(md['res'])
+
+  addr = "https://{}/{}/tile/{}/{}/{}/".format(server, version, collection, experiment, channel)
+
+  cutout = "xy/512/{}/{}/{}/{}/".format(res, xtile, ytile, ztile)
+
+  url = "{}{}".format(addr, cutout)
+
+  urlRequest = urllib2.Request(url, headers={"Authorization":"Token {}".format(token)})
+
+  requestContext = ssl._create_unverified_context()
+
+  try:
+    r = urllib2.urlopen(urlRequest, context=requestContext)
+  except urllib2.HTTPError, e:
+    r = '[ERROR]: ' + str(e.getcode())
+    return HttpResponseBadRequest(r)
+
+  return HttpResponse(r, content_type="image/png")
+
 def manage(request):
   context = {
       'layers': None,
